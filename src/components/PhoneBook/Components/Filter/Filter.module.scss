@@ -1,0 +1,20 @@
+.li {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
+.li + .li {
+  margin-top: 10px;
+}
+.button {
+  width: 70px;
+  height: 30px;
+  margin-left: 10px;
+  background-color: transparent;
+
+  &:hover {
+    background-color: black;
+    color: #fff;
+    cursor: pointer;
+  }
+}

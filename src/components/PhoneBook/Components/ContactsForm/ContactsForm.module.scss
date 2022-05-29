@@ -1,0 +1,35 @@
+.inputDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 300px;
+  height: 30px;
+}
+
+.label + .label {
+  margin-top: 10px;
+}
+.label {
+  width: 370px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+  height: 40px;
+  background-color: transparent;
+  margin-bottom: 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: black;
+    color: #fff;
+  }
+}
