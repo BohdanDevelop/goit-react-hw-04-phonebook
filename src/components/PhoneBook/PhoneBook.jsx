@@ -133,7 +133,7 @@ const PhoneBook = () => {
       name.toUpperCase().includes(filter.toUpperCase().trim())
     );
     return <Contacts names={newContacts} onClick={onDeleteClick} />;
-  }, [filter, contacts]);
+  }, [filter, contacts, onDeleteClick]);
   useEffect(() => {
     const savedContacts = JSON.parse(window.localStorage.getItem('contacts'));
     if (savedContacts.length) {
