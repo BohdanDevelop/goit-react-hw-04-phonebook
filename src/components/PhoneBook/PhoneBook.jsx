@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import Contacts from './Components/Contacts';
 import ContactsForm from './Components/ContactsForm';
 import Filter from './Components/Filter';
@@ -31,26 +31,31 @@ const PhoneBook = () => {
       });
     }
   };
-  const onDeleteClick = useCallback(evt => {
-    if (evt.target.type === 'button') {
-      const deleteName = evt.target.name.toLowerCase();
-      setContacts(() => {
-        const newContacts = contacts.filter(
-          element => element.name.toLowerCase() !== deleteName
-        );
-        return newContacts;
-      });
-    }
-  });
+  const onDeleteClick = useCallback(
+    evt => {
+      if (evt.target.type === 'button') {
+        const deleteName = evt.target.name.toLowerCase();
+        setContacts(() => {
+          const newContacts = contacts.filter(
+            element => element.name.toLowerCase() !== deleteName
+          );
+          return newContacts;
+        });
+      }
+    },
+    [contacts]
+  );
   const handleFilter = evt => {
     const { value } = evt.target;
     setFilter(value);
   };
-  const filteredContacts = useCallback(() => {
-    const newContacts = contacts.filter(({ name }) =>
-      name.toUpperCase().includes(filter.toUpperCase().trim())
-    );
-    return <Contacts names={newContacts} onClick={onDeleteClick} />;
+  const filteredContacts = useMemo(() => {
+    return () => {
+      const newContacts = contacts.filter(({ name }) =>
+        name.toUpperCase().includes(filter.toUpperCase().trim())
+      );
+      return <Contacts names={newContacts} onClick={onDeleteClick} />;
+    };
   }, [filter, contacts, onDeleteClick]);
   useEffect(() => {
     const savedContacts = JSON.parse(window.localStorage.getItem('contacts'));
