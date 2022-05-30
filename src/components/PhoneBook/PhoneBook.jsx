@@ -59,7 +59,7 @@ const PhoneBook = () => {
   }, [filter, contacts, onDeleteClick]);
   useEffect(() => {
     const savedContacts = JSON.parse(window.localStorage.getItem('contacts'));
-    if (savedContacts.length) {
+    if (savedContacts?.length) {
       setContacts([...savedContacts]);
     }
   }, []);
