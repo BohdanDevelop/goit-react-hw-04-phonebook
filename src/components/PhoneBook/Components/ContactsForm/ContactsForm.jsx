@@ -26,26 +26,20 @@ import PropTypes from 'prop-types';
 // }
 
 const ContactsForm = ({ handleSubmit }) => {
-  const [userName, setUserName] = useState('');
-  const [number, setNumber] = useState('');
+  const [data, setData] = useState({ userName: '', number: '' });
+
   const handleChange = evt => {
     const { value, name } = evt.target;
-    if (name === 'name') {
-      setUserName(value);
-    }
-    if (name === 'number') {
-      setNumber(value);
-    }
+    setData({ ...data, [name]: value });
   };
   const reset = () => {
-    setUserName('');
-    setNumber('');
+    setData({ userName: '', number: '' });
   };
   return (
     <form
       onSubmit={evt => {
         evt.preventDefault();
-        handleSubmit(userName, number);
+        handleSubmit(data.userName, data.number);
         reset();
       }}
     >
@@ -55,10 +49,10 @@ const ContactsForm = ({ handleSubmit }) => {
           <input
             className={style.input}
             type="text"
-            name="name"
+            name="userName"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            value={userName}
+            value={data.userName}
             onChange={handleChange}
             required
           />
@@ -73,7 +67,7 @@ const ContactsForm = ({ handleSubmit }) => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             onChange={handleChange}
-            value={number}
+            value={data.number}
           />
         </label>
       </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Contacts from './Components/Contacts';
 import ContactsForm from './Components/ContactsForm';
 import Filter from './Components/Filter';
@@ -21,19 +21,19 @@ const PhoneBook = () => {
     if (allTheName.includes(name.toUpperCase())) {
       alert(`${name} is already in contacts`);
     } else {
-      setContacts(() => {
+      setContacts(prevState => {
         const newContact = {
           name,
           number,
           id: `id-${nanoid()}`,
         };
-        return [...contacts, newContact];
+        return [...prevState, newContact];
       });
     }
   };
   const onDeleteClick = useCallback(
     evt => {
-      if (evt.target.type === 'button') {
+      if (evt.target.nodeName === 'BUTTON') {
         const deleteName = evt.target.name.toLowerCase();
         setContacts(() => {
           const newContacts = contacts.filter(
@@ -49,14 +49,12 @@ const PhoneBook = () => {
     const { value } = evt.target;
     setFilter(value);
   };
-  const filteredContacts = useMemo(() => {
-    return () => {
-      const newContacts = contacts.filter(({ name }) =>
-        name.toUpperCase().includes(filter.toUpperCase().trim())
-      );
-      return <Contacts names={newContacts} onClick={onDeleteClick} />;
-    };
-  }, [filter, contacts, onDeleteClick]);
+  const filteredContacts = () => {
+    const newContacts = contacts.filter(({ name }) =>
+      name.toUpperCase().includes(filter.toUpperCase().trim())
+    );
+    return newContacts;
+  };
   useEffect(() => {
     const savedContacts = JSON.parse(window.localStorage.getItem('contacts'));
     if (savedContacts?.length) {
@@ -74,7 +72,7 @@ const PhoneBook = () => {
     <>
       <ContactsForm handleSubmit={handleSubmit} />
       <Filter filter={filter} handleFilter={handleFilter} />
-      {filteredContacts()}
+      <Contacts names={filteredContacts()} onClick={onDeleteClick} />
     </>
   );
 };

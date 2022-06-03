@@ -1,5 +1,5 @@
 import style from './Contacts.module.scss';
-import { nanoid } from 'nanoid';
+
 import PropTypes from 'prop-types';
 
 // const markUp = names.filter(({name}) => name.toUpperCase().includes(filter.toUpperCase().trim())).map(({name, number}) =>{
@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 const Contacts = ({ names, onClick }) => {
   const contactsLi = names.map(({ name, number }) => {
     return (
-      <li className={style.li} onClick={onClick} key={nanoid()}>
+      <li className={style.li} onClick={onClick} key={name}>
         <div>
           {name} : {number}
         </div>
